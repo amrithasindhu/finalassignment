@@ -3,7 +3,7 @@ require_once("crud.php");
 
 class User {
     private $crud;
-    private $tableName = 'registrtaion';
+    private $tableName = 'form';
 
     public function __construct() {
         $this->crud = new Crud();
@@ -13,23 +13,15 @@ class User {
         $data = [
             'name' => $name,
             'email' => $email,
-            'password' => $password,
+            'password' => $password, 
             'user_type' => $user_type
-          
         ];
 
-        return $this->crud->insert('registrtaion', $data);
+        return $this->crud->insert($this->tableName, $data);
     }
-
-
 
     public function getUser($name) {
-      
-        return $this->crud->read('registrtaion', ['*'], 'name', $name);
+        return $this->crud->read($this->tableName, ['*'], 'name', $name);
     }
-
- 
 }
 ?>
-
-

@@ -1,31 +1,48 @@
 <?php
-require_once("userdetails.php");
+require_once('userdetails.php');
 
-$name = $_POST['name'];
-$password = $_POST['password'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = $_POST['name'];
+    $password = $_POST['password'];
 
-$userobj2 = new User();
-$result = $userobj2->getUser($name);
+    $userObj = new User();
+    $result = $userObj->getUser($name);
 
-if (is_array($result) && count($result) == 1) {
-    $users = $result[0];
-    if (password_verify($password, $users['password'])) {
 
-    if ($users['user_type'] == 'student') {
-            error_log("Redirecting to student page");
-            header("Location: mainpage.php");
-            exit();
-        } elseif ($users['user_type'] == 'admin') {
-            error_log("Redirecting to admin page");
-            header("Location: mainpage.php?user_type=admin");
+    if (is_array($result) && count($result) > 0) {
+        $user = $result[0];
+
+      
+        if (password_verify($password, $user['password'])) {
+          
+            if ($user['user_type'] === 'student') {
+                header("Location: mainpage.php");
+                exit();
+            } elseif ($user['user_type'] === 'admin') {
+                header("Location: mainpage.php?user_type=admin");
+                exit();
+            } else {
+                echo "<script>
+                    alert('Invalid user type.');
+                    window.location.href = 'login.php';
+                </script>";
+                exit();
+            }
+        } else {
+           
+            echo "<script>
+                alert('Invalid username or password');
+                window.location.href = 'login.php';
+            </script>";
             exit();
         }
+    } else {
+       
+        echo "<script>
+            alert('Invalid username or password');
+            window.location.href = 'login.php';
+        </script>";
+        exit();
     }
-
 }
-echo "<script>
-    alert('Invalid username or password');
-    window.location.href='login.php';
-    </script>";
-exit();
 ?>

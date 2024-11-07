@@ -15,13 +15,14 @@ class Crud extends Database {
             return false;
         }
     }
+
     public function read($tableName, $columns = ["*"], $specColumn = null, $specValue = null) {
         try {
             $columnList = implode(", ", $columns);
             $query = "SELECT $columnList FROM $tableName";
 
             if ($specColumn !== null && $specValue !== null) {
-                $query = $query . " WHERE $specColumn = :value";
+                $query .= " WHERE $specColumn = :value";
                 $stmt = $this->connect()->prepare($query);
                 $stmt->execute([':value' => $specValue]);
             } else {
@@ -65,4 +66,4 @@ class Crud extends Database {
         }
     }
 }
-
+?>
