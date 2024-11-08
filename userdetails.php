@@ -3,7 +3,7 @@ require_once("crud.php");
 
 class User {
     private $crud;
-    private $tableName = 'form';
+    private $tableName = 'registrtaion';
 
     public function __construct() {
         $this->crud = new Crud();

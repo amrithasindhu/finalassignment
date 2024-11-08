@@ -1,13 +1,14 @@
 <?php
 require_once('dbcon.php');
 require_once('userdetails.php');
+require_once("session.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $cpassword = $_POST['cpassword'];
-    $user_type = $_POST['user_type'];
+    $_SESSION['name'] = $_POST['name'];
+    $_SESSION[' $email'] = $_POST['email'];
+    $_SESSION['$password'] = $_POST['password'];
+    $_SESSION['$cpassword'] = $_POST['cpassword'];
+    $_SESSION['$user_type'] = $_POST['user_type'];
 
  
     if ($password != $cpassword) {
